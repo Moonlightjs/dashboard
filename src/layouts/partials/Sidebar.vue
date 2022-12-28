@@ -19,7 +19,7 @@
 import { asyncRouterMap } from "@/router/router";
 import { useGlobalAppStore } from "@/store/app";
 import { computed, ref, toRefs } from "vue";
-import MenuTreeview from '@/layouts/partials/MenuTreview.vue'
+import MenuTreeview from '@/layouts/partials/MenuTreeview.vue'
 // // interface Props {
 // //   drawer: boolean,
 // // }

@@ -48,7 +48,7 @@ export const asyncRouterMap: RouterMap[] = [
     path: "/",
     name: "index",
     component: "MainLayout",
-    meta: { title: "menu.home", requireAuth: true },
+    meta: { title: "Home", requireAuth: true },
     redirect: "/dashboard",
     children: [
       // dashboard
@@ -56,7 +56,7 @@ export const asyncRouterMap: RouterMap[] = [
         path: "/dashboard",
         name: "Dashboard",
         meta: {
-          title: "menu.dashboard",
+          title: "Dashboard",
           keepAlive: true,
           icon: "mdi-account-alert-outline",
           permissions: ["dashboard"],
@@ -68,7 +68,7 @@ export const asyncRouterMap: RouterMap[] = [
         name: "ContentManager",
         component: "ContentManager",
         meta: {
-          title: "menu.content-manager",
+          title: "Content Manager",
           keepAlive: true,
           icon: "mdi-alpha-c-circle",
           permissions: ["content-manager"],
@@ -80,7 +80,7 @@ export const asyncRouterMap: RouterMap[] = [
         name: "ContentTypeBuilder",
         component: "ContentTypeBuilder",
         meta: {
-          title: "menu.content-type-builder",
+          title: "Content-Type builder",
           keepAlive: true,
           icon: "mdi-account-credit-card",
           permissions: ["content-type-builder"],

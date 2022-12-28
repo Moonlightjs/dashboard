@@ -1,6 +1,6 @@
 
 <template>
-  <v-list-item v-if="!hasChildren" :prepend-icon="node.meta?.icon" :title="node.name"  :to="node.path" :value="node.name"
+  <v-list-item v-if="!hasChildren" :prepend-icon="node.meta?.icon" :title="node.meta?.title || node.name"  :to="node.path" :value="node.name"
     active-color="primary"> </v-list-item>
   <v-list-group v-if="hasChildren" :value="node.name">
     <template v-slot:activator="{ props }">
