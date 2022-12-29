@@ -16,6 +16,6 @@ const changeTheme = () => {
 
 <template>
   <v-btn :prepend-icon="
-    globalAppStore.theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'
-  " @click="changeTheme">Toggle Theme</v-btn>
+  globalAppStore.theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'
+" @click="changeTheme">Toggle Theme</v-btn>
 </template>
