@@ -26,6 +26,8 @@
                     <v-text-field autocomplete="off" label="Name" required type="text" v-model="form.name">
                     </v-text-field>
                     <span v-if="checkExistAttribute" class="text-red">Attribute is existing</span>
+                    <span v-if="form.name.includes(' ')" class="text-red">No space is allowed for
+                      the name of the attribute</span>
                   </div>
                   <div>
                     <label>Type</label>
@@ -49,7 +51,7 @@
                           </div>
                         </template>
                       </v-text-field></v-col>
-                    <v-col cols="6"><v-text-field type="text" v-model="form.RegExpPattern">
+                    <v-col cols="6"><v-text-field type="text" v-model="form.regExpPattern">
                         <template v-slot:label>
                           <div>
                             RegExp pattern
@@ -96,16 +98,17 @@
 <script setup lang="ts">
 import { computed, ref, toRefs, watch } from "vue";
 import * as _ from "lodash"
+import { AttributeField } from "../content-type-builder/type";
 const emit = defineEmits(['update:isOpen', 'update:data'])
 interface Props {
   isOpen: boolean,
   checkExistAttribute: boolean,
-  onCancel: (event: Event) => void;
-  onContinue: (form: object) => void;
-  onSave: (form: object) => void;
+  onCancel: () => void;
+  onContinue: (form: AttributeField) => void;
+  onSave: (form: AttributeField) => void;
   onChangePropertyName: (value: string) => void;
 }
-const initialValue = {
+const initialValue: AttributeField = {
   private: false,
   min: false,
   minLength: 0,
@@ -115,8 +118,10 @@ const initialValue = {
   required: false,
   typeText: "1",
   name: "",
-  RegExpPattern: "",
-  defaultValue: ""
+  regExpPattern: "",
+  defaultValue: null,
+  type: 'text',
+  icon: 'src/assets/images/text-icon.svg',
 };
 const form = ref({ ...initialValue });
 
@@ -133,11 +138,13 @@ const { onCancel, checkExistAttribute } = toRefs(props);
 const tab = ref(null);
 
 const onContinue = () => {
+  form.value.type = form.value.typeText === '1' ? 'string' : 'text';
   props.onContinue(JSON.parse(JSON.stringify(form.value)));
   form.value = { ...initialValue };
 }
 
 const onSave = () => {
+  form.value.type = form.value.typeText === '1' ? 'string' : 'text';
   props.onSave(JSON.parse(JSON.stringify(form.value)))
   form.value = { ...initialValue };
 }

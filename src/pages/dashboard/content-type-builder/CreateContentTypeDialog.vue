@@ -60,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { computed, ref, toRefs } from "vue";
 
 const emit = defineEmits(['update:isOpen', 'update:data'])

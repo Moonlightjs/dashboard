@@ -20,7 +20,7 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('email')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/email-icon.svg" style="width:32px; heigh:24px;">
@@ -34,7 +34,8 @@
 						</v-col>
 					</v-row>
 					<v-row class="pa-2">
-						<v-col class="hover-btn" style="cursor: pointer; margin-right:10px">
+						<v-col @click="onOpenDialogField('rich_text')" class=" hover-btn"
+							style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/rich-text-icon.svg" style="width:32px; heigh:24px;">
@@ -46,7 +47,7 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('password')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/password-icon.svg" style="width:32px; heigh:24px;">
@@ -60,7 +61,7 @@
 						</v-col>
 					</v-row>
 					<v-row class="pa-2">
-						<v-col class="hover-btn" style="cursor: pointer; margin-right:10px">
+						<v-col @click="onOpenDialogField('number')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/number-icon.svg" style="width:32px; heigh:24px;">
@@ -72,7 +73,7 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('enum')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/enum-icon.svg" style="width:32px; heigh:24px;">
@@ -86,7 +87,7 @@
 						</v-col>
 					</v-row>
 					<v-row class="pa-2">
-						<v-col class="hover-btn" style="cursor: pointer; margin-right:10px">
+						<v-col @click="onOpenDialogField('date')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/date-icon.svg" style="width:32px; heigh:24px;">
@@ -98,7 +99,7 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('media')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/media-icon.svg" style="width:32px; heigh:24px;">
@@ -112,7 +113,7 @@
 						</v-col>
 					</v-row>
 					<v-row class="pa-2">
-						<v-col class="hover-btn" style="cursor: pointer; margin-right:10px">
+						<v-col @click="onOpenDialogField('boolean')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/boolean-icon.svg" style="width:32px; heigh:24px;">
@@ -124,7 +125,7 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('JSON')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/JSON-icon.svg" style="width:32px; heigh:24px;">
@@ -138,7 +139,7 @@
 						</v-col>
 					</v-row>
 					<v-row class="pa-2">
-						<v-col class="hover-btn" style="cursor: pointer; margin-right:10px">
+						<v-col @click="onOpenDialogField('relation')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/relation-icon.svg" style="width:32px; heigh:24px;">
@@ -150,7 +151,7 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('UID')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
 									<v-img src="@/assets/images/UID-icon.svg" style="width:32px; heigh:24px;">
