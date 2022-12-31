@@ -116,7 +116,7 @@ class HttpClient {
       },
       error => {
         Promise.reject(error)
-    });
+      });
 
 
     // Response interceptors for API
@@ -124,35 +124,35 @@ class HttpClient {
 
       return response
     },
-    (error) => {
+      (error) => {
 
-       const originalRequest = error.config;
+        const originalRequest = error.config;
 
-      // if no login =>
-      if(error.response.status === 401 && !CookieControl.get('refreshToken')){
-        window.location.href = "/login"
-        // return Promise.reject(error);
-      }
+        // if no login =>
+        if (error.response.status === 401 && !CookieControl.get('refreshToken')) {
+          window.location.href = "/login"
+          // return Promise.reject(error);
+        }
 
-      if (error.response.status === 401 && !originalRequest._retry) {
+        if (error.response.status === 401 && !originalRequest._retry) {
 
-         originalRequest._retry = true;
-         return this.request.post('/auth/refresh-token',
-             {
-                 "refreshToken": CookieControl.get('refreshToken')
-             })
-             .then(res => {
-                if (res.status === 201) {
-                  CookieControl.set('refreshToken', res.data.data.refreshToken, process.env.VUE_APP_REFRESH_TOKEN_TIME)
-                  CookieControl.set('accessToken', res.data.data.accessToken, 60 * 10)
-                  this.request.defaults.headers.common['Authorization'] = 'Bearer ' + CookieControl.get('accessToken')
-                  return this.request(originalRequest);
-                }
-             })
-      }
+          originalRequest._retry = true;
+          return this.request.post('/auth/refresh-token',
+            {
+              "refreshToken": CookieControl.get('refreshToken')
+            })
+            .then(res => {
+              if (res.status === 201) {
+                CookieControl.set('refreshToken', res.data.data.refreshToken, process.env.VUE_APP_REFRESH_TOKEN_TIME)
+                CookieControl.set('accessToken', res.data.data.accessToken, 60 * 10)
+                this.request.defaults.headers.common['Authorization'] = 'Bearer ' + CookieControl.get('accessToken')
+                return this.request(originalRequest);
+              }
+            })
+        }
 
-      return Promise.reject(error);
-    });
+        return Promise.reject(error);
+      });
 
   }
 
@@ -163,23 +163,23 @@ class HttpClient {
     return this.instance;
   }
 
-  public post<D= any, T= any>(url: string, data?: D, config?: {}) : Promise<AxiosResponse<T>> {
+  public post<D = any, T = any>(url: string, data?: D, config?: {}): Promise<AxiosResponse<T>> {
     return this.request.post(url, data, config);
   }
 
-  public get<T= any>(url: string, config?: {}) : Promise<AxiosResponse<T>> {
+  public get<T = any>(url: string, config?: {}): Promise<AxiosResponse<T>> {
     return this.request.get<T, AxiosResponse<T>>(url, config);
   }
 
-  public put<D= any, T= any>(url: string, data?: D, config?: {}) : Promise<AxiosResponse<T>> {
+  public put<D = any, T = any>(url: string, data?: D, config?: {}): Promise<AxiosResponse<T>> {
     return this.request.put<T, AxiosResponse<T>, D>(url, data, config);
   }
 
-  public patch<D= any, T= any>(url: string, data?: D, config?: {}) : Promise<AxiosResponse<T>> {
+  public patch<D = any, T = any>(url: string, data?: D, config?: {}): Promise<AxiosResponse<T>> {
     return this.request.patch(url, data, config);
   }
 
-  public delete <T= any>(url: string, config?: {}) : Promise<AxiosResponse<T>> {
+  public delete<T = any>(url: string, config?: {}): Promise<AxiosResponse<T>> {
     return this.request.delete<T, AxiosResponse<T>>(url, { ...config });
   }
 }

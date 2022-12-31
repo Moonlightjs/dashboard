@@ -31,7 +31,7 @@
                     <v-col cols="6">
                       <label>Number format</label>
                       <v-select v-model="form.type" :items="dataSelect" label="Number format" persistent-hint
-                        item-title="title" item-value="value" return-object single-line></v-select>
+                        item-title="title" item-value="value" single-line></v-select>
 
                     </v-col>
                   </v-row>

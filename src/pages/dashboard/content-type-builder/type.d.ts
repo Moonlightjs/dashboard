@@ -1,4 +1,4 @@
-export type AttributeType = 'text' | 'string' | 'email' | 'rich_text' | 'password'
+export type AttributeType = 'text' | 'string' | 'email' | 'richtext' | 'password'
     | 'number' | 'integer' | 'bigint' | 'decimal' | 'float' | 'date' | 'datetime'
     | 'time' | 'boolean' | 'json' | 'enumeration' | 'relation';
 export interface AttributeField {
@@ -11,7 +11,7 @@ export interface CollectionType {
     displayName: string
     singular: string;
     plural: string;
-    isDraftAndPublish: boolean,
-    isSoftDelete: boolean,
+    draftAndPublish: boolean,
+    softDelete: boolean,
     attributes: Record<string, AttributeField>;
 }

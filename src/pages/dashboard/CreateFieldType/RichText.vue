@@ -99,7 +99,7 @@ const initialValue: AttributeField = {
   name: "",
   defaultValue: null,
   icon: 'src/assets/images/rich-text-icon.svg',
-  type: 'rich_text'
+  type: 'richtext'
 };
 const form = ref({ ...initialValue });
 
