@@ -32,7 +32,6 @@
                       <label>Number format</label>
                       <v-select v-model="form.type" :items="dataSelect" label="Number format" persistent-hint
                         item-title="title" item-value="value" single-line></v-select>
-
                     </v-col>
                   </v-row>
                 </v-col>
@@ -94,15 +93,17 @@ const emit = defineEmits(['update:isOpen', 'update:data'])
 interface Props {
   isOpen: boolean,
   checkExistAttribute: boolean,
+  bindData: AttributeField | null,
   onCancel: () => void;
   onContinue: (form: AttributeField) => void;
   onSave: (form: AttributeField) => void;
   onChangePropertyName: (value: string) => void;
 }
-const dataSelect = [{ value: 'integer', title: 'integer (ex: 10)' },
-{ value: 'bigint', title: 'big integer (ex: 123456789)' },
-{ value: 'decimal', title: 'decimal (ex: 2.22)' },
-{ value: 'float', title: 'float (ex: 3.33333333)' },
+const dataSelect = [
+  { value: 'integer', title: 'integer (ex: 10)' },
+  { value: 'bigint', title: 'big integer (ex: 123456789)' },
+  { value: 'decimal', title: 'decimal (ex: 2.22)' },
+  { value: 'float', title: 'float (ex: 3.33333333)' },
 ]
 const initialValue: AttributeField = {
   private: false,
@@ -128,7 +129,7 @@ const isOpen = computed({
   set(newValue: boolean) { emit('update:isOpen', newValue) }
 })
 
-const { onCancel, checkExistAttribute } = toRefs(props);
+const { onCancel, checkExistAttribute, bindData } = toRefs(props);
 const tab = ref(null);
 
 const onContinue = () => {
@@ -146,4 +147,19 @@ watch(() => form.value.name,
   }, 500)
 );
 
+watch(() => props.isOpen,
+  () => {
+    if (bindData.value !== null) {
+      form.value.private = bindData.value.private || false;
+      form.value.min = bindData.value.minLength ? bindData.value.min : false;
+      form.value.minLength = bindData.value.minLength || 0;
+      form.value.max = bindData.value.maxLength ? bindData.value.max : false;
+      form.value.maxLength = bindData.value.maxLength || 0;
+      form.value.uniqueField = bindData.value.uniqueField || false;
+      form.value.required = bindData.value.required || false;
+      form.value.name = bindData.value.name || "";
+      form.value.type = bindData.value.type || 'integer';
+      form.value.defaultValue = bindData.value.defaultValue || null;
+    }
+  })
 </script>

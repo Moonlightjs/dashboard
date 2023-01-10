@@ -71,6 +71,7 @@ const emit = defineEmits(['update:isOpen', 'update:data'])
 interface Props {
   isOpen: boolean,
   checkExistAttribute: boolean,
+  bindData: AttributeField | null,
   onCancel: () => void;
   onContinue: (form: AttributeField) => void;
   onSave: (form: AttributeField) => void;
@@ -100,7 +101,7 @@ const isOpen = computed({
   set(newValue: boolean) { emit('update:isOpen', newValue) }
 })
 
-const { onCancel, checkExistAttribute } = toRefs(props);
+const { onCancel, checkExistAttribute, bindData } = toRefs(props);
 const tab = ref(null);
 
 const onContinue = () => {
@@ -118,4 +119,15 @@ watch(() => form.value.name,
   }, 500)
 );
 
+watch(() => props.isOpen,
+  () => {
+    if (bindData.value !== null) {
+      form.value.private = bindData.value.private || false;
+      form.value.required = bindData.value.required || false;
+      form.value.name = bindData.value.name || "";
+      form.value.defaultValue = bindData.value.defaultValue || null;
+      form.value.type = bindData.value.type || 'null';
+      form.value.defaultValue = bindData.value.defaultValue || 'null'
+    }
+  })  
 </script>

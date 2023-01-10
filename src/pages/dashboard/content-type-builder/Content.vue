@@ -51,41 +51,41 @@
       :on-continue="handleContinue" :on-cancel="handleCloseDialog"></CreateContentTypeDialog>
     <AddField :on-open-dialog-field="handleInputField" v-model:data="dateField" v-model:is-open="isOpenAddField">
     </AddField>
-    <TextField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 1" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <TextField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 1"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </TextField>
-    <EmailField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 2" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <EmailField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 2"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </EmailField>
-    <RichTextField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 3" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <RichTextField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 3"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </RichTextField>
-    <PasswordField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 4" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <PasswordField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 4"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </PasswordField>
-    <NumberField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 5" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <NumberField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 5"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </NumberField>
-    <EnumerationField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 6" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <EnumerationField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 6"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </EnumerationField>
-    <DateField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 7" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <DateField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 7"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </DateField>
-    <BooleanField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 9" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <BooleanField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 9"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </BooleanField>
-    <JSONField :checkExistAttribute="checkExistAttribute" :on-change-property-name="handleOnChangePropertyName"
-      :is-open="isOpenDialogField === 10" :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField"
-      :on-continue="handleContinueDialogField">
+    <JSONField :bind-data="dynamicData" :checkExistAttribute="checkExistAttribute"
+      :on-change-property-name="handleOnChangePropertyName" :is-open="isOpenDialogField === 10"
+      :on-save="handleSaveDialogField" :on-cancel="handleCancelDialogField" :on-continue="handleContinueDialogField">
     </JSONField>
   </div>
 </template>
@@ -103,8 +103,7 @@ import JSONField from '@/pages/dashboard/CreateFieldType/JSON.vue';
 import BooleanField from '@/pages/dashboard/CreateFieldType/Boolean.vue';
 import DateField from '@/pages/dashboard/CreateFieldType/Date.vue';
 
-import { paramCase } from "param-case";
-import { watch, ref, computed, toRefs } from "vue";
+import { ref, computed, toRefs } from "vue";
 import { AttributeField, CollectionType } from './type';
 
 interface Props {
@@ -121,7 +120,7 @@ const isOpenAddField = ref(false);
 const dateField = ref({});
 const isOpenDialogField = ref(0);
 const checkExistAttribute = ref(false);
-
+const dynamicData = ref<AttributeField | null>(null);
 //#region Method
 const handleContinueDialogField = (data: AttributeField) => {
   // save
@@ -151,6 +150,10 @@ const handleCancelDialogField = () => {
 }
 const handleOnChangePropertyName = (value: string) => {
   if (value in form.value.attributes) {
+    if (dynamicData.value && value === dynamicData.value.name) {
+      checkExistAttribute.value = false;
+      return;
+    }
     checkExistAttribute.value = true;
   } else
     checkExistAttribute.value = false;
@@ -159,7 +162,7 @@ const handleCloseDialog = () => {
   isOpenDialog.value = false;
 }
 const handleOpenDialog = () => {
-  form.value = { ...initialValue }
+  // form.value = { ...initialValue }
   isOpenDialog.value = true;
 }
 const handleContinue = () => {
@@ -172,6 +175,7 @@ const handleContinue = () => {
 }
 const handleInputField = (type: string) => {
   isOpenAddField.value = false;
+  dynamicData.value = null;
   switch (type) {
     case 'text': {
       isOpenDialogField.value = 1;
@@ -225,6 +229,7 @@ const handleInputField = (type: string) => {
 }
 const handleEditField = (attribute: AttributeField) => {
   const type = attribute.type;
+  dynamicData.value = attribute;
   switch (type) {
     case 'string':
     case 'text': {
