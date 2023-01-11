@@ -29,20 +29,28 @@
         </thead>
         <tbody>
           <tr v-for="attribute in Object.values(form.attributes)" :key="attribute.name">
-            <td class=" mt-2 text-h5 d-flex justify-start align-center ">
-              <div class="mr-4">
-                <v-img :src="attribute.icon" style=" width:48px; heigh:32px;">
-                </v-img>
+            <td class="mt-2 text-h5  ">
+              <div class="d-flex justify-start align-center">
+                <div class="mr-4">
+                  <v-img :src="attribute.icon" style=" width:48px; heigh:32px;">
+                  </v-img>
+                </div>
+                <div>{{ attribute.name }}</div>
               </div>
-              <div>{{ attribute.name }}</div>
             </td>
-            <td class="text-h5">{{ attribute.type }}</td>
+            <td class="text-h5 ">{{ attribute.type }}</td>
             <td class="d-flex  flex-row justify-center mt-2">
               <v-btn variant="text" icon="mdi-pencil" @click="handleEditField(attribute)" color="red-lighten-2"></v-btn>
               <v-btn variant="text" icon="mdi-delete" @click="handleDeleteField(attribute)"
                 color="red-lighten-2"></v-btn>
             </td>
           </tr>
+          <!-- <div style="background: rgb(73, 69, 255); width: 100%;"> -->
+          <v-btn v-if="form" style="background: rgb(240, 240, 255) ;color:rgb(73, 69, 255);" class=" mt-2"
+            @click="handleOpenAddField()" prepend-icon="mdi-plus-box">Add another
+            field
+          </v-btn>
+          <!-- </div> -->
         </tbody>
       </v-table>
     </v-card>

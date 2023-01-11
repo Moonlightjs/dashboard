@@ -39,7 +39,7 @@
             <v-window-item value="advanced">
               <v-row>
                 <v-col>
-                  <label>Draft/Publish </label>
+                  <label>Draft/Publish</label>
                   <v-switch color="primary" v-model="data.isDraftAndPublish" hide-details inset></v-switch>
                 </v-col>
                 <v-col>
