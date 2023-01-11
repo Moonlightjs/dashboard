@@ -111,15 +111,16 @@ const { onCancel, checkExistAttribute, bindData } = toRefs(props);
 const tab = ref(null);
 
 const onContinue = () => {
-  form.value.enum = form.value.enum.shift()
+  form.value.enum.shift()
   if (form.value.defaultValue === 'null')
     form.value.defaultValue = null
   props.onContinue(JSON.parse(JSON.stringify(form.value)));
   form.value = { ...initialValue };
+
 }
 
 const onSave = () => {
-  form.value.enum = form.value.enum.shift()
+  form.value.enum.shift()
   if (form.value.defaultValue === 'null')
     form.value.defaultValue = null
   props.onSave(JSON.parse(JSON.stringify(form.value)))
@@ -143,9 +144,9 @@ watch(() => props.isOpen,
       form.value.private = bindData.value.private || false;
       form.value.required = bindData.value.required || false;
       form.value.name = bindData.value.name || "";
-      form.value.enumValue = bindData.value.enum.join("\n") || 'integer';
+      form.value.enumValue = bindData.value.enum.join("\n") || '';
       form.value.enum = ["null", ...bindData.value.enum]
       form.value.defaultValue = bindData.value.defaultValue || null;
     }
-  })  
+  })
 </script>

@@ -6,7 +6,8 @@
         <v-btn variant="flat" color="secondary" @click="handleOpenDialog()">Edit</v-btn>
       </v-col>
       <v-col class="d-flex flex-row justify-end">
-        <v-btn class="mr-2" prepend-icon="mdi-cloud-upload" variant="flat" color="secondary">Add another
+        <v-btn @click="handleOpenAddField()" class="mr-2" prepend-icon="mdi-cloud-upload" variant="flat"
+          color="secondary">Add another
           field</v-btn>
         <v-btn prepend-icon="mdi-cloud-upload" @click="onSave(form)" variant="flat" color="primary">Save</v-btn>
       </v-col>
@@ -110,12 +111,13 @@ interface Props {
   contentType: CollectionType,
   isOpenDialog: boolean,
   onSave: (collectionType: CollectionType) => void;
+  openAddField: (name: string) => CollectionType;
 }
 const props = withDefaults(defineProps<Props>(), {
   isOpenDialog: false
 })
 
-const { onSave } = toRefs(props);
+const { onSave, openAddField } = toRefs(props);
 const isOpenAddField = ref(false);
 const dateField = ref({});
 const isOpenDialogField = ref(0);
@@ -133,7 +135,10 @@ const handleContinueDialogField = (data: AttributeField) => {
   isOpenDialogField.value = 0;
   // reopen
   isOpenAddField.value = true;
-  console.log(data);
+}
+const handleOpenAddField = () => {
+  // const currentModel = openAddField();
+  isOpenAddField.value = true;
 }
 const handleSaveDialogField = (data: AttributeField) => {
   data.maxLength = parseInt(data.maxLength)
@@ -141,8 +146,6 @@ const handleSaveDialogField = (data: AttributeField) => {
   form.value.attributes = {
     ...form.value.attributes, [data.name]: data
   }
-  console.log(data);
-
   isOpenDialogField.value = 0;
 }
 const handleCancelDialogField = () => {
@@ -283,7 +286,7 @@ const handleEditField = (attribute: AttributeField) => {
 const handleDeleteField = (attribute: AttributeField) => {
   delete form.value.attributes[attribute.name]
 }
-// #endregion 
+// #endregion
 const emit = defineEmits(['update:isOpenDialog', 'update:contentType'])
 const isOpenDialog = computed({
   get() { return props.isOpenDialog },

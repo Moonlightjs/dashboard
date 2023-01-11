@@ -21,7 +21,8 @@
       </v-list>
     </v-navigation-drawer>
     <!-- content -->
-    <Content v-model:content-type="form" v-model:is-open-dialog="isOpenDialog" :on-save="handleSaveContentType">
+    <Content v-model:open-add-field="handleOpenDialogField" v-model:content-type="form"
+      v-model:is-open-dialog="isOpenDialog" :on-save="handleSaveContentType">
     </Content>
   </div>
 </template>
@@ -56,7 +57,9 @@ const handleOpenDialog = () => {
   form.value = { ...initialValue }
   isOpenDialog.value = true;
 }
-
+const handleOpenDialogField = (name: string): CollectionType => {
+  return listContentTypes.value[name]
+}
 const handleSaveContentType = (collectionType: CollectionType) => {
   listContentTypes.value[collectionType.displayName] = collectionType;
 }
