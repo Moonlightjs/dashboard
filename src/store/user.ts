@@ -1,6 +1,5 @@
-// Utilities
 import { defineStore } from "pinia";
-export const useGlobalAppStore = defineStore("globalApp", {
+export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,
   }),

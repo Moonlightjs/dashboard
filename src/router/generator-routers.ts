@@ -17,7 +17,7 @@ const constantRouterComponents: Record<any, Component> = {
   // Page components you need to import dynamically
   Dashboard: () => import("@/pages/dashboard/Dashboard.vue"),
   ContentManager: () => import("@/pages/dashboard/ContentManager.vue"),
-  ContentTypeBuilder: () => import("@/pages/dashboard/ContentTypeBuilder.vue"),
+  ContentTypeBuilder: () => import("@/pages/dashboard/content-type-builder/ContentTypeBuilder.vue"),
 
   Login: () => import("@/pages/auth/Login.vue"),
 };

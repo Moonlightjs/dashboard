@@ -5,8 +5,15 @@ export const useGlobalAppStore = defineStore("globalApp", {
     theme: "light",
     rail: false,
     drawer: true,
+    isProgressCircularLoading: false,
   }),
   actions: {
+    turnOnProgressCircularLoading() {
+      this.isProgressCircularLoading = true;
+    },
+    turnOffProgressCircularLoading() {
+      this.isProgressCircularLoading = false;
+    },
     switchTheme(theme: string) {
       this.theme = theme;
     },

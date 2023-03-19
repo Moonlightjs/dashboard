@@ -11,7 +11,7 @@
 						<v-col @click="onOpenDialogField('text')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/text-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/text-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols="10">
@@ -23,7 +23,7 @@
 						<v-col @click="onOpenDialogField('email')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/email-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/email-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols="10">
@@ -34,11 +34,11 @@
 						</v-col>
 					</v-row>
 					<v-row class="pa-2">
-						<v-col @click="onOpenDialogField('rich_text')" class=" hover-btn"
+						<v-col @click="onOpenDialogField('richtext')" class=" hover-btn"
 							style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/rich-text-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/rich-text-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -50,7 +50,7 @@
 						<v-col @click="onOpenDialogField('password')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/password-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/password-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -61,10 +61,10 @@
 						</v-col>
 					</v-row>
 					<v-row class="pa-2">
-						<v-col @click="onOpenDialogField('number')" class="hover-btn" style="cursor: pointer; margin-right:10px">
+						<v-col @click="onOpenDialogField('integer')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/number-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/number-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -73,10 +73,10 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col @click="onOpenDialogField('enum')" class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('enumeration')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/enum-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/enum-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -90,7 +90,7 @@
 						<v-col @click="onOpenDialogField('date')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/date-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/date-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -102,7 +102,7 @@
 						<v-col @click="onOpenDialogField('media')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/media-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/media-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -116,7 +116,7 @@
 						<v-col @click="onOpenDialogField('boolean')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/boolean-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/boolean-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -125,10 +125,10 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col @click="onOpenDialogField('JSON')" class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('json')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/JSON-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/JSON-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -142,7 +142,7 @@
 						<v-col @click="onOpenDialogField('relation')" class="hover-btn" style="cursor: pointer; margin-right:10px">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/relation-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/relation-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols=" 8">
@@ -151,10 +151,10 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col @click="onOpenDialogField('UID')" class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('uid')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/UID-icon.svg" style="width:32px; heigh:24px;">
+									<v-img src="@/assets/images/UID-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols="10">
@@ -170,29 +170,34 @@
 	</v-dialog>
 </template>
 <script setup lang="ts">
+import { CollationTypeAttributeType } from "@/service/content-type-builder.service";
 import { computed, ref, toRefs } from "vue";
 
-const emit = defineEmits(['update:isOpen', 'update:data'])
+const emit = defineEmits(['update:isOpen', 'update:data']);
+
 interface Props {
 	isOpen: boolean,
-	onOpenDialogField: (type: string) => void,
+	onOpenDialogField: (type: CollationTypeAttributeType) => void,
 	data: any,
 }
 
 const props = withDefaults(defineProps<Props>(), {
 	isOpen: false,
-})
+});
+
 const isOpen = computed({
 	get() { return props.isOpen },
 	set(newValue: boolean) { emit('update:isOpen', newValue) }
-})
+});
+
 const data = computed({
 	get() { return props.data },
 	set(newValue: any) { emit('update:data', newValue) }
-})
+});
+
 const { onOpenDialogField } = toRefs(props);
 </script>
-  
+
 
 <style scoped>
 .hover-btn:hover {

@@ -22,17 +22,17 @@
               <v-row>
                 <v-col>
                   <v-text-field autocomplete="off" label="Display name" required type="text"
-                    v-model="data.displayName"></v-text-field>
+                    v-model="data.info.displayName"></v-text-field>
                 </v-col>
                 <v-col>
-                  <v-text-field type="text" v-model="data.singular">
+                  <v-text-field type="text" v-model="data.info.singularName">
                     <template v-slot:label>
                       <div>
                         Singular
                       </div>
                     </template>
                   </v-text-field>
-                  <v-text-field autocomplete="off" label="Plural" type="text" v-model="data.plural"></v-text-field>
+                  <v-text-field autocomplete="off" label="Plural" type="text" v-model="data.info.pluralName"></v-text-field>
                 </v-col>
               </v-row>
             </v-window-item>
@@ -40,11 +40,11 @@
               <v-row>
                 <v-col>
                   <label>Draft/Publish</label>
-                  <v-switch color="primary" v-model="data.isDraftAndPublish" hide-details inset></v-switch>
+                  <v-switch color="primary" v-model="data.options.draftAndPublish" hide-details inset></v-switch>
                 </v-col>
                 <v-col>
                   <label>Soft Delete </label>
-                  <v-switch color="primary" v-model="data.isSoftDelete" hide-details inset></v-switch>
+                  <v-switch color="primary" v-model="data.options.softDelete" hide-details inset></v-switch>
                 </v-col>
               </v-row>
             </v-window-item>
@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-
+import { CollationType } from "@/service/content-type-builder.service";
 import { computed, ref, toRefs } from "vue";
 
 const emit = defineEmits(['update:isOpen', 'update:data'])
@@ -68,7 +68,7 @@ interface Props {
   isOpen: boolean,
   onCancel: (event: Event) => void;
   onContinue: (event: Event) => void;
-  data: any,
+  data: CollationType,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -80,9 +80,8 @@ const isOpen = computed({
 })
 const data = computed({
   get() { return props.data },
-  set(newValue: any) { emit('update:data', newValue) }
+  set(newValue: CollationType) { emit('update:data', newValue) }
 })
 const { onCancel, onContinue } = toRefs(props);
-const tab = ref(null);
-
+const tab = ref<"basic" | "advanced">("basic");
 </script>

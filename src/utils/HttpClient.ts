@@ -89,71 +89,85 @@ import Logger from "./Logger";
 //   return Promise.reject(response.data);
 // };
 
-
 class HttpClient {
   private static instance: HttpClient;
   private request: AxiosInstance;
 
   private constructor() {
+    console.log(import.meta.env.VITE_ROOT_API);
     this.request = axios.create({
-      baseURL: process.env.VUE_APP_ROOT_API || "http://localhost:3000/api/v1",
+      baseURL: import.meta.env.VITE_ROOT_API || "http://localhost:1998/api/v1",
       // adapter: cache.adapter,
     });
-    this.request.defaults.timeout = process.env.VUE_APP_NETWORK_TIMEOUT ? parseInt(process.env.VUE_APP_NETWORK_TIMEOUT, 10) : undefined;
+    this.request.defaults.timeout = process.env.VUE_APP_NETWORK_TIMEOUT
+      ? parseInt(process.env.VUE_APP_NETWORK_TIMEOUT, 10)
+      : undefined;
 
     this.request.defaults.headers.common = {
-      "X-Requested-With": "XMLHttpRequest"
+      "X-Requested-With": "XMLHttpRequest",
     };
 
     // Request interceptor for API calls
     this.request.interceptors.request.use(
-      async config => {
+      async (config) => {
         config.headers = {
-          'Authorization': 'Bearer ' + CookieControl.get('accessToken'),
-          'Accept': 'application/json',
-        }
+          Authorization: CookieControl.get("accessToken")
+            ? "Bearer " + CookieControl.get("accessToken")
+            : undefined,
+          Accept: "application/json",
+        };
         return config;
       },
-      error => {
-        Promise.reject(error)
-      });
-
+      (error) => {
+        Promise.reject(error);
+      }
+    );
 
     // Response interceptors for API
-    this.request.interceptors.response.use((response) => {
-
-      return response
-    },
+    this.request.interceptors.response.use(
+      (response) => {
+        return response;
+      },
       (error) => {
-
         const originalRequest = error.config;
 
         // if no login =>
-        if (error.response.status === 401 && !CookieControl.get('refreshToken')) {
-          window.location.href = "/login"
+        if (
+          error.response.status === 401 &&
+          !CookieControl.get("refreshToken")
+        ) {
+          window.location.href = "/login";
           // return Promise.reject(error);
         }
 
         if (error.response.status === 401 && !originalRequest._retry) {
-
           originalRequest._retry = true;
-          return this.request.post('/auth/refresh-token',
-            {
-              "refreshToken": CookieControl.get('refreshToken')
+          return this.request
+            .post("/auth/refresh-token", {
+              refreshToken: CookieControl.get("refreshToken"),
             })
-            .then(res => {
+            .then((res) => {
               if (res.status === 201) {
-                CookieControl.set('refreshToken', res.data.data.refreshToken, process.env.VUE_APP_REFRESH_TOKEN_TIME)
-                CookieControl.set('accessToken', res.data.data.accessToken, 60 * 10)
-                this.request.defaults.headers.common['Authorization'] = 'Bearer ' + CookieControl.get('accessToken')
+                CookieControl.set(
+                  "refreshToken",
+                  res.data.data.refreshToken,
+                  process.env.VUE_APP_REFRESH_TOKEN_TIME
+                );
+                CookieControl.set(
+                  "accessToken",
+                  res.data.data.accessToken,
+                  60 * 10
+                );
+                this.request.defaults.headers.common["Authorization"] =
+                  "Bearer " + CookieControl.get("accessToken");
                 return this.request(originalRequest);
               }
-            })
+            });
         }
 
         return Promise.reject(error);
-      });
-
+      }
+    );
   }
 
   static getInstance() {
@@ -163,7 +177,11 @@ class HttpClient {
     return this.instance;
   }
 
-  public post<D = any, T = any>(url: string, data?: D, config?: {}): Promise<AxiosResponse<T>> {
+  public post<D = any, T = any>(
+    url: string,
+    data?: D,
+    config?: {}
+  ): Promise<AxiosResponse<T>> {
     return this.request.post(url, data, config);
   }
 
@@ -171,11 +189,19 @@ class HttpClient {
     return this.request.get<T, AxiosResponse<T>>(url, config);
   }
 
-  public put<D = any, T = any>(url: string, data?: D, config?: {}): Promise<AxiosResponse<T>> {
+  public put<D = any, T = any>(
+    url: string,
+    data?: D,
+    config?: {}
+  ): Promise<AxiosResponse<T>> {
     return this.request.put<T, AxiosResponse<T>, D>(url, data, config);
   }
 
-  public patch<D = any, T = any>(url: string, data?: D, config?: {}): Promise<AxiosResponse<T>> {
+  public patch<D = any, T = any>(
+    url: string,
+    data?: D,
+    config?: {}
+  ): Promise<AxiosResponse<T>> {
     return this.request.patch(url, data, config);
   }
 
@@ -183,6 +209,5 @@ class HttpClient {
     return this.request.delete<T, AxiosResponse<T>>(url, { ...config });
   }
 }
-
 
 export default HttpClient.getInstance();
