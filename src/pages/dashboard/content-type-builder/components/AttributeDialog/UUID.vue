@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isOpen" width="800">
     <v-card>
-      <v-card-title class="pt-4 text-center"> Add new JSON field </v-card-title>
+      <v-card-title class="pt-4 text-center"> Add new UUID field </v-card-title>
       <v-row class="pa-12">
         <v-col>
           <h3 style="font-weight: bold">Configurations</h3>
@@ -41,22 +41,43 @@
             </v-window-item>
             <v-window-item value="advanced">
               <v-row>
-                <v-col cols="6">
-                  <v-checkbox
-                    v-model="form.required"
-                    label="Required field"
-                    color="primary"
-                    value="true"
-                  ></v-checkbox>
+                <v-col>
+                  <v-row>
+                    <v-col cols="6"
+                      ><v-text-field type="text" v-model="form.default">
+                        <template v-slot:label>
+                          <div>Default value</div>
+                        </template>
+                      </v-text-field></v-col
+                    >
+                  </v-row>
+                  <v-row>
+                    <v-col cols="6">
+                      <v-checkbox
+                        v-model="form.required"
+                        label="Required field"
+                        color="primary"
+                        :value="true"
+                      ></v-checkbox>
+                    </v-col>
+                    <v-col cols="6">
+                      <v-checkbox
+                        v-model="form.unique"
+                        label="Unique field"
+                        color="primary"
+                        :value="true"
+                      ></v-checkbox>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-checkbox
+                        v-model="form.private"
+                        label="Private field"
+                        color="primary"
+                        :value="true"
+                      ></v-checkbox
+                    ></v-col>
+                  </v-row>
                 </v-col>
-                <v-col cols="6">
-                  <v-checkbox
-                    v-model="form.private"
-                    label="Private field"
-                    color="primary"
-                    value="true"
-                  ></v-checkbox
-                ></v-col>
               </v-row>
             </v-window-item>
           </v-window>
@@ -81,7 +102,7 @@ import { computed, ref, toRefs, watch } from "vue";
 import debounce from "lodash/debounce";
 import {
   CollationTypeAttribute,
-  CollationTypeAttributeBase,
+  CollationTypeAttributeString,
 } from "@/service/content-type-builder.service";
 import { convertRefValueToRawData } from "@/utils/ConvertData";
 
@@ -102,17 +123,22 @@ interface Props {
 
 const emit = defineEmits(["update:isOpen", "update:data"]);
 
-const initialValue: CollationTypeAttributeBase = {
+const initialValue: CollationTypeAttributeString = {
   private: false,
+  minLength: 0,
+  maxLength: 0,
   required: false,
-  type: "json",
+  regex: null,
+  default: null,
+  type: "string",
   unique: false,
   configurable: false,
   writable: false,
   visible: false,
 };
 
-const form = ref<CollationTypeAttributeBase>({ ...initialValue });
+
+const form = ref<CollationTypeAttributeString>({ ...initialValue });
 
 const props = withDefaults(defineProps<Props>(), {
   isOpen: false,
@@ -138,7 +164,10 @@ const attrName = ref<string>(props.attrName);
 const tab = ref<"basic" | "advanced">("basic");
 
 const onContinue = () => {
-  props.onContinue(attrName.value, convertRefValueToRawData(form) as CollationTypeAttribute);
+  props.onContinue(
+    attrName.value,
+    convertRefValueToRawData(form) as CollationTypeAttribute
+  );
   attrName.value = "";
   form.value = { ...initialValue };
 };
@@ -179,7 +208,7 @@ watch(
   () => {
     if (attribute.value !== null) {
       form.value = {
-        ...attribute.value as CollationTypeAttributeBase,
+        ...attribute.value as CollationTypeAttributeString,
       };
     }
     tab.value = 'basic';

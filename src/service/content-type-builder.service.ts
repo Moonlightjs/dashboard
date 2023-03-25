@@ -17,7 +17,7 @@ export type CollationTypeAttributeTypeCommon =
   | "time"
   | "boolean"
   | "json"
-  | "uid";
+  | "uuid";
 
 export type CollationTypeAttributeTypeRelation = "relation";
 

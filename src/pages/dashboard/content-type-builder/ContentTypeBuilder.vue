@@ -12,7 +12,6 @@
                     contentTypesStore.contentTypes
                   )"
                   :key="i"
-                  prepend-icon=" mdi-circle-small"
                   @click="selectContentType(contentType)"
                   :value="contentType.collectionName"
                   :title="contentType.info.displayName"
@@ -36,6 +35,8 @@
       v-model:content-type="form"
       v-model:is-open-content-type-info-dialog="isOpenContentTypeInfoDialog"
       :on-save="handleSaveContentType"
+      :content-types="contentTypesStore.contentTypes"
+      :on-delete="handleDelete"
     >
     </ContentTypeForm>
   </div>
@@ -51,6 +52,7 @@ import { useContentTypeStore } from "@/store/content-type";
 import { CollationType } from "@/service/content-type-builder.service";
 import { Nullable } from "@/types/common";
 import { useGlobalAppStore } from "@/store/app";
+import { pluralize } from "@/utils/String";
 //#endregion
 
 //#region data
@@ -61,9 +63,9 @@ const globalAppStore = useGlobalAppStore();
 watch(
   () => contentTypesStore.isLoading,
   (val) => {
-    if (val){
+    if (val) {
       globalAppStore.turnOnProgressCircularLoading();
-    }else{
+    } else {
       globalAppStore.turnOffProgressCircularLoading();
     }
   }
@@ -99,8 +101,11 @@ const handleOpenAddNewDialog = () => {
   isOpenContentTypeInfoDialog.value = true;
 };
 
-const handleOpenDialogField = (uid: string): CollationType => {
-  return contentTypesStore.contentTypes[uid];
+const handleDelete = (uid: string) => {
+  const answer = window.confirm("Save data?");
+  if (answer) {
+    contentTypesStore.deleteContentType(uid);
+  }
 };
 
 const handleSaveContentType = (collationType: CollationType) => {
@@ -141,17 +146,17 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  window.onbeforeunload = null;
+  // window.onbeforeunload = null;
 });
 
 watch(
   () => form.value,
   (val) => {
-    if (JSON.stringify(val) != JSON.stringify(selectedContentType.value)) {
-      window.onbeforeunload = function () {
-        return "information you’ve entered may not be saved.";
-      };
-    }
+    // if (JSON.stringify(val) != JSON.stringify(selectedContentType.value)) {
+    //   window.onbeforeunload = function () {
+    //     return "information you’ve entered may not be saved.";
+    //   };
+    // }
   }
 );
 
@@ -159,13 +164,9 @@ watch(
   () => form.value.info.displayName,
   (val) => {
     if (form.value.info.displayName.trim().length === 0) return;
+    form.value.info.displayName = pascalCase(val);
     form.value.info.singularName = paramCase(val);
-    let processValue = paramCase(val);
-    if (processValue.split("").at(-1) === "y") {
-      processValue = processValue.substring(0, processValue.length - 1) + "ies";
-    } else {
-      processValue = processValue + "s";
-    }
+    const processValue = pluralize(paramCase(val));
     form.value.info.pluralName = paramCase(processValue);
     if (!form.value.uid.length) {
       form.value.collectionName = pascalCase(val);

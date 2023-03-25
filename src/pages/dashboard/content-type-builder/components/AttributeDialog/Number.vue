@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isOpen" width="800">
     <v-card>
-      <v-card-title class="pt-4 text-center"> Add new Text field </v-card-title>
+      <v-card-title class="pt-4 text-center"> Add new Number field </v-card-title>
       <v-row class="pa-12">
         <v-col>
           <h3 style="font-weight: bold">Configurations</h3>
@@ -85,7 +85,7 @@
                     <v-col cols="6">
                       <v-checkbox
                         v-model="isUseMax"
-                        label="Maximum length"
+                        label="Maximum"
                         color="primary"
                         value="true"
                       ></v-checkbox>
@@ -99,8 +99,8 @@
                     </v-col>
                     <v-col cols="6">
                       <v-checkbox
-                        v-model="form.min"
-                        label="Minimum length"
+                        v-model="isUseMin"
+                        label="Minimum"
                         color="primary"
                         value="true"
                       ></v-checkbox>
@@ -283,6 +283,13 @@ const isAttributeNameValid = computed(
 );
 
 watch(
+  () => props.attrName,
+  () => {
+    attrName.value = props.attrName;
+  }
+);
+
+watch(
   () => props.isOpen,
   () => {
     if (attribute.value !== null) {
@@ -292,6 +299,7 @@ watch(
         ...(attribute.value as CollationTypeAttributeNumber),
       };
     }
+    tab.value = 'basic';
   }
 );
 </script>

@@ -302,6 +302,7 @@ watch(
         ...(attribute.value as CollationTypeAttributeString),
       };
     }
+    tab.value = 'basic';
   }
 );
 </script>

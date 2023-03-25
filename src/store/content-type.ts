@@ -14,31 +14,52 @@ export const useContentTypeStore = defineStore("contentType", {
   }),
   getters: {
     isLoading(): boolean {
-      return this.isLoadingGetList || this.isLoadingCreate || this.isLoadingUpdate || this.isLoadingDelete;
+      return (
+        this.isLoadingGetList ||
+        this.isLoadingCreate ||
+        this.isLoadingUpdate ||
+        this.isLoadingDelete
+      );
     },
   },
   actions: {
     async getListContentType() {
       this.isLoadingGetList = true;
-      this.contentTypes = await ContentTypeBuilderService.getList();
+      try {
+        this.contentTypes = await ContentTypeBuilderService.getList();
+      } catch (error) {
+        console.error(error);
+      }
       this.isLoadingGetList = false;
     },
     async createContentType(data: ContentTypeBuilderInput) {
       this.isLoadingCreate = true;
-      await ContentTypeBuilderService.create(data);
+      try {
+        await ContentTypeBuilderService.create(data);
+      } catch (error) {
+        console.error(error);
+      }
       this.isLoadingCreate = false;
       await this.getListContentType();
     },
     async updateContentType(uid: string, data: ContentTypeBuilderInput) {
       this.isLoadingUpdate = true;
-      await ContentTypeBuilderService.update(uid, data);
+      try {
+        await ContentTypeBuilderService.update(uid, data);
+      } catch (error) {
+        console.error(error);
+      }
       this.isLoadingUpdate = false;
       await this.getListContentType();
     },
     async deleteContentType(uid: string) {
-      this.isLoadingDelete = false;
-      await ContentTypeBuilderService.delete(uid);
       this.isLoadingDelete = true;
+      try {
+        await ContentTypeBuilderService.delete(uid);
+      } catch (error) {
+        console.error(error);
+      }
+      this.isLoadingDelete = false;
       await this.getListContentType();
     },
   },

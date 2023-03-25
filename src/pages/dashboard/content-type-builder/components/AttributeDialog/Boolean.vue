@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isOpen" width="800">
     <v-card>
-      <v-card-title class="pt-4 text-center"> Add new Text field </v-card-title>
+      <v-card-title class="pt-4 text-center"> Add new Boolean field </v-card-title>
       <v-row class="pa-12">
         <v-col>
           <h3 style="font-weight: bold">Configurations</h3>
@@ -193,6 +193,13 @@ const isAttributeNameValid = computed(
 );
 
 watch(
+  () => props.attrName,
+  () => {
+    attrName.value = props.attrName;
+  }
+);
+
+watch(
   () => props.isOpen,
   () => {
     if (attribute.value !== null) {
@@ -200,6 +207,7 @@ watch(
         ...attribute.value as CollationTypeAttributeBoolean,
       };
     }
+    tab.value = 'basic';
   }
 );
 </script>

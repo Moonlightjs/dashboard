@@ -151,10 +151,10 @@
 								</v-col>
 							</v-row>
 						</v-col>
-						<v-col @click="onOpenDialogField('uid')" class="hover-btn" style="cursor: pointer">
+						<v-col @click="onOpenDialogField('uuid')" class="hover-btn" style="cursor: pointer">
 							<v-row class="rounded" style=" border: 1px solid black">
 								<v-col cols="2">
-									<v-img src="@/assets/images/UID-icon.svg" style="width:32px; height:24px;">
+									<v-img src="@/assets/images/uuid-icon.svg" style="width:32px; height:24px;">
 									</v-img>
 								</v-col>
 								<v-col cols="10">
@@ -173,12 +173,11 @@
 import { CollationTypeAttributeType } from "@/service/content-type-builder.service";
 import { computed, ref, toRefs } from "vue";
 
-const emit = defineEmits(['update:isOpen', 'update:data']);
+const emit = defineEmits(['update:isOpen']);
 
 interface Props {
 	isOpen: boolean,
 	onOpenDialogField: (type: CollationTypeAttributeType) => void,
-	data: any,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -188,11 +187,6 @@ const props = withDefaults(defineProps<Props>(), {
 const isOpen = computed({
 	get() { return props.isOpen },
 	set(newValue: boolean) { emit('update:isOpen', newValue) }
-});
-
-const data = computed({
-	get() { return props.data },
-	set(newValue: any) { emit('update:data', newValue) }
 });
 
 const { onOpenDialogField } = toRefs(props);

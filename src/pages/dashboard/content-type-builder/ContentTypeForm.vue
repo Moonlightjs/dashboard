@@ -83,23 +83,17 @@
       </v-table>
     </v-card>
   </div>
-  <div
-    style="
-       {
-        display: hidden;
-      }
-    "
-  >
+  <div style="{display: hidden;}">
     <ContentTypeInfoDialog
       v-model:data="contentType"
       v-model:is-open="isOpenContentTypeInfoDialog"
       isOpenDialogField
       :on-continue="handleContinue"
       :on-cancel="handleCloseContentTypeInfoDialog"
+      :on-delete="onDelete"
     ></ContentTypeInfoDialog>
     <AttributeDialog
       :on-open-dialog-field="handleAddNewAttribute"
-      v-model:data="dateField"
       v-model:is-open="isOpenAttributeDialog"
     >
     </AttributeDialog>
@@ -202,6 +196,28 @@
       :on-continue="handleFinishContinueDialog"
     >
     </JSONField>
+    <RelationField
+      :attr-name="selectedAttrName"
+      :attribute="selectedAttribute"
+      :is-already-exist-name="isAlreadyExistName"
+      :on-change-property-name="handleOnChangePropertyName"
+      :is-open="attributeDialogType === 'relation'"
+      :on-save="handleSaveSaveAttribute"
+      :on-cancel="handleCancelDialogField"
+      :on-continue="handleFinishContinueDialog"
+      :content-type="contentType"
+      :content-types="contentTypes"
+    />
+    <UUIDField
+      :attr-name="selectedAttrName"
+      :attribute="selectedAttribute"
+      :is-already-exist-name="isAlreadyExistName"
+      :on-change-property-name="handleOnChangePropertyName"
+      :is-open="attributeDialogType === 'uuid'"
+      :on-save="handleSaveSaveAttribute"
+      :on-cancel="handleCancelDialogField"
+      :on-continue="handleFinishContinueDialog"
+      />
   </div>
 </template>
 
@@ -217,6 +233,8 @@ import EnumerationField from "@/pages/dashboard/content-type-builder/components/
 import JSONField from "@/pages/dashboard/content-type-builder/components/AttributeDialog/JSON.vue";
 import BooleanField from "@/pages/dashboard/content-type-builder/components/AttributeDialog/Boolean.vue";
 import DateField from "@/pages/dashboard/content-type-builder/components/AttributeDialog/Date.vue";
+import RelationField from "@/pages/dashboard/content-type-builder/components/AttributeDialog/Relation.vue";
+import UUIDField from "@/pages/dashboard/content-type-builder/components/AttributeDialog/UUID.vue";
 import { ref, computed, toRefs } from "vue";
 import {
   CollationType,
@@ -229,15 +247,16 @@ interface Props {
   contentType: CollationType;
   isOpenContentTypeInfoDialog: boolean;
   onSave: (collectionType: CollationType) => void;
+  contentTypes: Record<string, CollationType>;
+  onDelete: (uid: string) => void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isOpenContentTypeInfoDialog: false,
 });
 
-const { onSave } = toRefs(props);
+const { onSave, onDelete } = toRefs(props);
 const isOpenAttributeDialog = ref(false);
-const dateField = ref({});
 const attributeDialogType = ref<string>("none");
 const isAlreadyExistName = ref<boolean>(false);
 const selectedAttribute = ref<Nullable<CollationTypeAttribute>>(null);
@@ -375,8 +394,8 @@ const handleAddNewAttribute = (type: CollationTypeAttributeType) => {
       attributeDialogType.value = "relation";
       break;
     }
-    case "uid": {
-      attributeDialogType.value = "uid";
+    case "uuid": {
+      attributeDialogType.value = "uuid";
       break;
     }
   }
@@ -387,9 +406,6 @@ const handleEditAttribute = (
   attribute: CollationTypeAttribute
 ) => {
   const type = attribute.type as CollationTypeAttributeType;
-  console.log("🚀 ------------------------------------------------🚀");
-  console.log("🚀 ~ file: ContentTypeForm.vue:373 ~ type:", type);
-  console.log("🚀 ------------------------------------------------🚀");
   selectedAttribute.value = {
     ...attribute,
   };
@@ -445,8 +461,8 @@ const handleEditAttribute = (
       attributeDialogType.value = "relation";
       break;
     }
-    case "uid": {
-      attributeDialogType.value = "uid";
+    case "uuid": {
+      attributeDialogType.value = "uuid";
       break;
     }
   }
@@ -490,6 +506,9 @@ const getIconAttribute = (attribute: CollationTypeAttribute) => {
     }
     case "relation": {
       return "src/assets/images/relation-icon.svg";
+    }
+    case "uuid": {
+      return "src/assets/images/uuid-icon.svg";
     }
   }
   return "";

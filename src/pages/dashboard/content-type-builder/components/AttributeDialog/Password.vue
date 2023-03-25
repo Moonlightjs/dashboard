@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isOpen" width="800">
     <v-card>
-      <v-card-title class="pt-4 text-center"> Add new Text field </v-card-title>
+      <v-card-title class="pt-4 text-center"> Add new Password field </v-card-title>
       <v-row class="pa-12">
         <v-col>
           <h3 style="font-weight: bold">Configurations</h3>
@@ -243,6 +243,13 @@ watch(
   }, 500)
 );
 
+watch(
+  () => props.attrName,
+  () => {
+    attrName.value = props.attrName;
+  }
+);
+
 const isAttributeNameValid = computed(
   () =>
     !attrName.value.includes("-") &&
@@ -262,6 +269,7 @@ watch(
         ...(attribute.value as CollationTypeAttributeString),
       };
     }
+    tab.value = 'basic';
   }
 );
 </script>
